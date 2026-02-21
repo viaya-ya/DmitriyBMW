@@ -1,0 +1,49 @@
+name: Portfolio
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Забираем код
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Устанавливаем Node.js (если сайт собирается)
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 3. Устанавливаем зависимости
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Собираем сайт
+      - name: Build
+        run: npm run build
+
+      # 5. Загружаем результат сборки
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      # 6. Деплой в GitHub Pages
+      - name: Deploy to Pages
+        uses: actions/deploy-pages@v4
