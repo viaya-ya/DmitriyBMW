@@ -1,6 +1,7 @@
 import {motion, AnimatePresence} from "framer-motion";
 import {useEffect, useState} from "react";
-import myVideo from "../assets/IMG_0574.MOV";
+import VideoPlayer from "./VideoPlayer.jsx";
+
 
 const words = ["Подходите за наш столик",
     "Вы привлекательны",
@@ -143,20 +144,7 @@ export default function Text() {
 
             {/* Видео " */}
             { finished && (
-                <video
-                    src={myVideo}
-                    style={{
-                        position: "relative",
-                        width: "60vw",
-                        height: "70vh",
-                        borderRadius: "12px",
-                        objectFit: "cover",
-                        boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
-                    }}
-                    autoPlay
-                    loop
-                    controls
-                />
+               <VideoPlayer/>
             )}
         </div>
     );
